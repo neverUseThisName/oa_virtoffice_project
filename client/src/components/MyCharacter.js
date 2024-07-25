@@ -59,45 +59,6 @@ function MyCharacter({
     loadCharacter,
   ]);
 
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      const key = event.key.toLowerCase();
-      let newPosition = { ...myCharactersData.position };
-
-      switch (key) {
-        case "w":
-          newPosition.y -= 1;
-          break;
-        case "s":
-          newPosition.y += 1;
-          break;
-        case "a":
-          newPosition.x -= 1;
-          break;
-        case "d":
-          newPosition.x += 1;
-          break;
-        default:
-          return;
-      }
-
-      // Update the character's position
-      const updatedUsers = {
-        [MY_CHARACTER_INIT_CONFIG.id]: {
-          ...myCharactersData,
-          position: newPosition,
-        },
-      };
-      updateAllCharactersData(updatedUsers);
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [myCharactersData, updateAllCharactersData]);
-
   return null;
 }
 
