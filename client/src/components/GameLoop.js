@@ -6,6 +6,9 @@ import { MOVE_DIRECTIONS, MAP_DIMENSIONS, TILE_SIZE } from "./mapConstants";
 import { MY_CHARACTER_INIT_CONFIG } from "./characterConstants";
 import { checkMapCollision } from "./utils";
 import { update as updateAllCharactersData } from "./slices/allCharactersSlice";
+import { set, ref } from "firebase/database";
+import { app as fbApp } from "../firebase/firebase";
+import FireBaseListener from "./FireBaseListener";
 
 const GameLoop = ({ children, allCharactersData, updateAllCharactersData }) => {
   const canvasRef = useRef(null);
@@ -22,26 +25,18 @@ const GameLoop = ({ children, allCharactersData, updateAllCharactersData }) => {
 
   const moveMyCharacter = useCallback(
     (e) => {
-      var currentPosition = mycharacterData.position;
       const key = e.key;
       if (MOVE_DIRECTIONS[key]) {
         // ***********************************************
         // TODO: Add your move logic here
         // new position
-        const x = currentPosition.x + MOVE_DIRECTIONS[key][0];
-        const y = currentPosition.y + MOVE_DIRECTIONS[key][1];
+        const x = mycharacterData.position.x + MOVE_DIRECTIONS[key][0];
+        const y = mycharacterData.position.y + MOVE_DIRECTIONS[key][1];
         // update users
-        const users = {
-          ...allCharactersData,
-          [mycharacterData.id]: {
-            ...mycharacterData,
-            position: { x, y },
-          },
-        };
-        updateAllCharactersData(users);
+        set(ref(fbApp, "users/" + mycharacterData.id + "position"), { x, y });
       }
     },
-    [allCharactersData, mycharacterData, updateAllCharactersData]
+    [allCharactersData, mycharacterData]
   );
 
   const tick = useCallback(() => {
@@ -77,6 +72,7 @@ const GameLoop = ({ children, allCharactersData, updateAllCharactersData }) => {
         class="main-canvas"
       />
       {children}
+      <FireBaseListener />
     </CanvasContext.Provider>
   );
 };

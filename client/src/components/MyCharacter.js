@@ -10,6 +10,8 @@ import { TILE_SIZE } from "./mapConstants";
 import { loadCharacter } from "./slices/statusSlice";
 import { MY_CHARACTER_INIT_CONFIG } from "./characterConstants";
 import { update as updateAllCharactersData } from "./slices/allCharactersSlice";
+import { set, ref } from "firebase/database";
+import { app as fbApp } from "../firebase/firebase";
 
 function MyCharacter({
   myCharactersData,
@@ -28,7 +30,7 @@ function MyCharacter({
     const users = {};
     const myId = MY_CHARACTER_INIT_CONFIG.id;
     users[myId] = myInitData;
-    updateAllCharactersData(users);
+    set(ref(fbApp, "users/" + myInitData.id), myInitData);
   }, [webrtcSocket]);
 
   useEffect(() => {
