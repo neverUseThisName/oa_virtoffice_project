@@ -11,7 +11,7 @@ import { loadCharacter } from "./slices/statusSlice";
 import { MY_CHARACTER_INIT_CONFIG } from "./characterConstants";
 import { update as updateAllCharactersData } from "./slices/allCharactersSlice";
 import { set, ref } from "firebase/database";
-import { app as fbApp } from "../firebase/firebase";
+import { FireBaseDB as fbdb } from "../firebase/firebase";
 
 function MyCharacter({
   myCharactersData,
@@ -30,7 +30,7 @@ function MyCharacter({
     const users = {};
     const myId = MY_CHARACTER_INIT_CONFIG.id;
     users[myId] = myInitData;
-    set(ref(fbApp, "users/" + myInitData.id), myInitData);
+    set(ref(fbdb, "users/" + myInitData.id), myInitData);
   }, [webrtcSocket]);
 
   useEffect(() => {

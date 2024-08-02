@@ -7,7 +7,7 @@ import { MY_CHARACTER_INIT_CONFIG } from "./characterConstants";
 import { checkMapCollision } from "./utils";
 import { update as updateAllCharactersData } from "./slices/allCharactersSlice";
 import { set, ref } from "firebase/database";
-import { app as fbApp } from "../firebase/firebase";
+import { FireBaseDB as fbdb } from "../firebase/firebase";
 import FireBaseListener from "./FireBaseListener";
 
 const GameLoop = ({ children, allCharactersData, updateAllCharactersData }) => {
@@ -33,7 +33,7 @@ const GameLoop = ({ children, allCharactersData, updateAllCharactersData }) => {
         const x = mycharacterData.position.x + MOVE_DIRECTIONS[key][0];
         const y = mycharacterData.position.y + MOVE_DIRECTIONS[key][1];
         // update users
-        set(ref(fbApp, "users/" + mycharacterData.id + "position"), { x, y });
+        set(ref(fbdb, "users/" + mycharacterData.id + "/position"), { x, y });
       }
     },
     [allCharactersData, mycharacterData]
@@ -71,8 +71,8 @@ const GameLoop = ({ children, allCharactersData, updateAllCharactersData }) => {
         height={TILE_SIZE * MAP_DIMENSIONS.ROWS}
         class="main-canvas"
       />
-      {children}
       <FireBaseListener />
+      {children}
     </CanvasContext.Provider>
   );
 };
