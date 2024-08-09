@@ -7,13 +7,13 @@ import {
   CHARACTER_CLASSES_MAP,
 } from "./characterConstants";
 import { TILE_SIZE } from "./mapConstants";
-import { loadCharacter } from "./slices/statusSlice";
 
-function OtherCharacter({ name, x, y, charClass, loadCharacter }) {
+function OtherCharacter({ name, x, y, charClass }) {
   const context = useContext(CanvasConext);
 
   useEffect(() => {
     if (context == null) {
+      console.log("null context");
       return;
     }
     const characterImg = document.querySelector(
@@ -31,12 +31,9 @@ function OtherCharacter({ name, x, y, charClass, loadCharacter }) {
       CHARACTER_IMAGE_SIZE,
       CHARACTER_IMAGE_SIZE
     );
-    loadCharacter(true);
-  }, [context, name, x, y, charClass, loadCharacter]);
+  }, [context, name, x, y, charClass]);
 
   return null;
 }
 
-const dispatches = { loadCharacter };
-
-export default connect(null, dispatches)(OtherCharacter);
+export default OtherCharacter;

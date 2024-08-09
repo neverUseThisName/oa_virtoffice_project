@@ -21,14 +21,14 @@ const OtherCharacters = ({ otherChars }) => {
 };
 
 const state2props = (state) => {
-  const chars = state.allCharacters.users;
-  Object.keys(chars)
+  const otherChars = Object.keys(state.allCharacters.users)
     .filter((id) => id !== MY_CHARACTER_INIT_CONFIG.id)
     .reduce((res, id) => {
-      res[id] = chars[id];
+      res[id] = state.allCharacters.users[id];
       return res;
     }, {});
-  return { otherChars: chars };
+  // console.log(otherChars);
+  return { otherChars: otherChars };
 };
 
 export default connect(state2props, {})(OtherCharacters);
