@@ -1,17 +1,15 @@
 import React, { useCallback } from "react";
 
-const MyVideo = ({ myStream }) => {
+const MyVideo = ({ stream }) => {
   const setVideoNode = useCallback(
     (vidNode) => {
-      vidNode && (vidNode.srcObject = myStream);
+      vidNode && (vidNode.srcObject = stream);
     },
-    [myStream]
+    [stream]
   );
 
   return (
-    <>
-      {myStream && <video width="200px" ref={setVideoNode} autoPlay={true} />}
-    </>
+    <>{stream && <video width="200px" ref={setVideoNode} autoPlay={true} />}</>
   );
 };
 

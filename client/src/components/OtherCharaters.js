@@ -10,9 +10,9 @@ const OtherCharacters = ({ otherChars }) => {
       {Object.keys(otherChars).map((id) => (
         <OtherCharacter
           key={id}
-          name={otherChars[id]["username"]}
-          x={otherChars[id]["x"]}
-          y={otherChars[id]["y"]}
+          name={otherChars[id]["name"]}
+          x={otherChars[id]["position"]["x"]}
+          y={otherChars[id]["position"]["y"]}
           charClass={otherChars[id]["characterClass"]}
         />
       ))}
@@ -27,7 +27,6 @@ const state2props = (state) => {
       res[id] = state.allCharacters.users[id];
       return res;
     }, {});
-  // console.log(otherChars);
   return { otherChars: otherChars };
 };
 

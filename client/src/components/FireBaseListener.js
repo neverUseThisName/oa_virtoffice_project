@@ -8,7 +8,7 @@ const FireBaseListener = ({ updateAllCharactersData }) => {
   useEffect(() => {
     const posRef = ref(fbdb, "users/");
     const remove = onValue(posRef, (ref) => {
-      console.log(ref.val());
+      // console.log(ref.val());
       updateAllCharactersData(ref.val());
     });
     return remove;

@@ -7,10 +7,15 @@ import "./App.css";
 import { io } from "socket.io-client";
 import VideoCalls from "./components/VideoCalls";
 
+// connect to backend server using tcp socket
 const WEBRTC_SOCKET = io("http://localhost:8080");
 
 function App() {
+  // only render when socket is conncected
   const [socketConnected, setSocketConnected] = useState(false);
+  WEBRTC_SOCKET.on("disconnect", () => {
+    setSocketConnected(false);
+  });
   WEBRTC_SOCKET.on("connect", () => {
     setSocketConnected(true);
   });
@@ -22,7 +27,7 @@ function App() {
           <GameLoop>
             <Office webrtcSocket={WEBRTC_SOCKET} />
           </GameLoop>
-          <VideoCalls webrtcSocket={WEBRTC_SOCKET} />
+          <VideoCalls socket={WEBRTC_SOCKET} />
         </main>
       )}
       <footer></footer>

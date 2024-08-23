@@ -7,12 +7,12 @@ import CanvasContext from "./CanvasContext";
 import MyCharacter from "./MyCharacter";
 import { MAP_DIMENSIONS, TILE_SIZE, MAP_TILE_IMAGES } from "./mapConstants";
 import OtherCharacters from "./OtherCharaters";
+import VideoCalls from "./VideoCalls";
 
 const Office = ({ mapImagesLoaded, gameStatus, webrtcSocket }) => {
   const width = MAP_DIMENSIONS.COLS * TILE_SIZE;
   const height = MAP_DIMENSIONS.ROWS * TILE_SIZE;
   const context = useContext(CanvasContext);
-
   useEffect(() => {
     return () => {
       context &&
@@ -38,6 +38,9 @@ const Office = ({ mapImagesLoaded, gameStatus, webrtcSocket }) => {
       )}
       {gameStatus.mapLoaded && <MyCharacter webrtcSocket={webrtcSocket} />}
       {gameStatus.mapLoaded && <OtherCharacters />}
+      {/* {gameStatus.mapLoaded && gameStatus.characterLoaded && (
+        <VideoCalls socket={webrtcSocket} />
+      )} */}
     </>
   );
 };

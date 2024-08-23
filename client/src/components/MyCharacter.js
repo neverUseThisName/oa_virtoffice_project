@@ -20,7 +20,6 @@ function MyCharacter({
   webrtcSocket,
 }) {
   const context = useContext(CanvasConext);
-
   useEffect(() => {
     const myInitData = {
       ...MY_CHARACTER_INIT_CONFIG,
@@ -31,6 +30,7 @@ function MyCharacter({
     const myId = MY_CHARACTER_INIT_CONFIG.id;
     users[myId] = myInitData;
     set(ref(fbdb, "users/" + myInitData.id), myInitData);
+    console.log("socket ID", myInitData.socketId);
   }, [webrtcSocket]);
 
   useEffect(() => {
